@@ -1,6 +1,7 @@
 // axios 封装处理
 // 导入 axios 实例
 import axios from "axios"
+import { getToken } from "./token"
 
 // 1. 根域名配置
 // 2. 超时时间
@@ -18,6 +19,13 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(function(config) {
   // 在请求之前做的事情,做拦截，插入自定义配置（参数的处理）
+  // 在 config 参数中做 Token 注入
+  // 1. 获取到 Token（localStorage）(utils/token.js 中 getToken 方法)
+  const token = getToken()
+  if(token) {
+    // 2. 按照后端的要求做 Token 的拼接: Axios 提供的 headers 和后端要求加上 Bearer
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 }, function (error) {
   // 请求错误时要做的事情
