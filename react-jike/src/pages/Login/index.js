@@ -18,7 +18,7 @@ const Login = () => {
 
   // 提交表单的方法
   const onFinish = async (values) => {
-    console.log(values)
+    // console.log(values)
     // 触发 fetchLogin 方法, 传递用户信息的 values 传递给 fetchLogin 中的 loginForm
     await dispatch(fetchLogin(values))
     // 跳转到首页
